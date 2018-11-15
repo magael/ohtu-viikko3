@@ -1,8 +1,6 @@
 package ohtu;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.apache.http.client.fluent.Request;
@@ -63,11 +61,6 @@ public class Main {
                 kurssiTehtävia += i;
             }
 
-            // Mallitulostuksessa otettu huomioon vain ne viikot, joista
-            // kyseinen opiskelija on tehnyt palautuksen.
-            // Mielestäni kuitenkin kokonaismäärä tulisi laskea mukaanlukien
-            // viikot, joilta ei ole vielä palautusta (mutta joiden tehtävät on
-            // julkaistu).
             System.out.println("\nYhteensä: " + tehtyYhteensa + "/" + kurssiTehtävia);
 
             JsonObject tilastoData = parsiData("https://studies.cs.helsinki.fi/courses/" + c + "/stats");
@@ -75,17 +68,16 @@ public class Main {
             int tehtavia = 0;
             int tunteja = 0;
 
-            for (int i = 0; i < tilastoData.size(); i++) {
-                JsonObject tilastoJO = tilastoData.getAsJsonObject(Integer.toString(i));
-//                palautuksia += tilastoJO.get("students").getAsInt();
-
-                //JsonElement tilastoJE = tilastoData.get(Integer.toString(i));
-
+            for (String avain : tilastoData.keySet()) {
+                JsonObject tilastoAvain = tilastoData.getAsJsonObject(avain);
+                palautuksia += tilastoAvain.get("students").getAsInt();
+                tehtavia += tilastoAvain.get("exercise_total").getAsInt();
+                tunteja += tilastoAvain.get("hour_total").getAsInt();
             }
 
-//            System.out.println("\nKurssilla yhteensä " + tilastoJO.get("students") 
-//                    + " palautusta, palautettuja tehtäviä " + tilastoJO.get("") + " kpl, "
-//                    + "aikaa käytetty yhteensä " + " tuntia");
+            System.out.println("\nKurssilla yhteensä " + palautuksia 
+                    + " palautusta. Palautettuja tehtäviä " + tehtavia + " kpl."
+                    + " Aikaa käytetty yhteensä " + tunteja + " tuntia.");
         }
     }
 
