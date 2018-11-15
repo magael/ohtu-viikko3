@@ -48,7 +48,7 @@ public class Submission {
                 + "Tehdyt tehtävät: " + exercisesAsString();
     }
 
-    private String exercisesAsString() {
+    public String exercisesAsString() {
         String exerciceString = "";
         for (int i = 0; i < exercises.size() - 1; i++) {
             exerciceString += exercises.get(i).toString() + ", ";
