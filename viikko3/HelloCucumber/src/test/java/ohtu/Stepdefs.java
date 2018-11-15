@@ -27,5 +27,10 @@ public class Stepdefs {
     public void the_value_should_be(int val) throws Throwable {
         assertEquals(val, counter.value());
     }
-  
+    
+    @When("^it is reset$")
+    public void it_is_reset() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        counter.reset();
+    }
 }
