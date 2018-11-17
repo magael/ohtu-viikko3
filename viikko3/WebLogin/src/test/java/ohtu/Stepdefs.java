@@ -57,6 +57,22 @@ public class Stepdefs {
         WebElement element = driver.findElement(By.linkText("register new user"));       
         element.click();
     }
+    
+    @Given("^user with username \"([^\"]*)\" with password \"([^\"]*)\" is successfully created$")
+    public void user_with_username_with_password_is_successfully_created(String username, String password) throws Throwable {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));       
+        element.click();
+        registerWith(username, password, password);
+    }
+
+    @Given("^user with username \"([^\"]*)\" and password \"([^\"]*)\" is tried to be created$")
+    public void user_with_username_and_password_is_tried_to_be_created(String username, String password) throws Throwable {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.linkText("register new user"));       
+        element.click();
+        registerWith(username, password, password);
+    }
 
     @When("^a valid username \"([^\"]*)\" and password \"([^\"]*)\" and matching password confirmation are entered$")
     public void a_valid_username_and_password_and_matching_password_confirmation_are_entered(String username, String password) throws Throwable {
